@@ -1,9 +1,8 @@
 package com.example.carpoolbuddy;
 
-import java.lang.reflect.Array;
 import java.util.ArrayList;
 
-public class User extends AuthActivity{
+public class User {
     private String uid;
     private String name;
     private String email;
@@ -11,6 +10,17 @@ public class User extends AuthActivity{
     private double priceMultiplier;
     private ArrayList<String> ownedVehicles;
 
+    public User() {
+
+    }
+    public User(String uid, String name, String email){
+        this.uid = uid;
+        this.name = name;
+        this.email = email;
+        this.userType = "";
+        this.priceMultiplier = 0;
+        ownedVehicles = new ArrayList<String>();
+    }
     public User(String uid, String name, String email, String userType, double priceMultiplier, ArrayList<String> ownedVehicles) {
         this.uid = uid;
         this.name = name;

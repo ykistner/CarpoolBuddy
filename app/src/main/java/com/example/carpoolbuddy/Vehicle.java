@@ -1,8 +1,9 @@
 package com.example.carpoolbuddy;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 
-public class Vehicle extends AddVehicleActivity{
+public class Vehicle implements Serializable {
     private String owner;
     private String model;
     private int capacity;
@@ -11,6 +12,10 @@ public class Vehicle extends AddVehicleActivity{
     private boolean open;
     private String vehicleType;
     private double basePrice;
+
+    public Vehicle() {
+
+    }
 
     public Vehicle(String owner, String model, int capacity, String vehicleID, ArrayList<String> ridersUIDs, boolean open, String vehicleType, double basePrice) {
         this.owner = owner;

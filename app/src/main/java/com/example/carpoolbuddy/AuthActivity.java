@@ -15,10 +15,12 @@ import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 
 import java.lang.reflect.Array;
 import java.util.ArrayList;
+import java.util.UUID;
 
 public class AuthActivity extends AppCompatActivity {
 
@@ -56,38 +58,66 @@ public class AuthActivity extends AppCompatActivity {
         String passwordString = passwordField.getText().toString();
         System.out.println(String.format("Email: %s and Password %s", emailString, passwordString));
 
-        FirebaseUser mUser= mAuth.getCurrentUser();
+        mAuth.signInWithEmailAndPassword(emailString, passwordString).addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
+            @Override
+            public void onComplete(@NonNull Task<AuthResult> task) {
+                if (task.isSuccessful()) {
+                    // Sign in success, update UI with the signed-in user's information
+                    Log.d("Login: ", "signInWithEmail:success");
+                    FirebaseUser user = mAuth.getCurrentUser();
+                    updateUI(user);
+                } else {
+                    // If sign in fails, display a message to the user.
+                    Log.w("Login: ", "signInWithEmail:failure", task.getException());
+                    updateUI(null);
+                }
+            }
+        });
+
 
         ArrayList<String> myCars = new ArrayList<>();
-        myCars.add("Tesla");
+        myCars.add("Tesla"); myCars.add("Toyota"); myCars.add("BMW");
+        myCars.add("Audi"); myCars.add("Mercedes"); myCars.add("VW");
 
         ArrayList<String> myRidersUID = new ArrayList<>();
-        myRidersUID.add("rider123");
+        myRidersUID.add(UUID.randomUUID().toString());
 
-        User thisUser = new User("User123", "Yuuto Kistner", "Yuuto_Kistner@fis.edu", "Student", 2, myCars);
-        Vehicle thisVehicle = new Vehicle("Tom Mayock", "Audi Q5", 4, "car123", myRidersUID, true, "SUV", 7.99);
+        User thisUser = new User(UUID.randomUUID().toString(), "Yuuto Kistner", "Yuuto_Kistner@fis.edu", "Student", 2, myCars);
+        Vehicle thisVehicle = new Vehicle("Tom Mayock", "Audi Q5", 4, UUID.randomUUID().toString(), myRidersUID, true, "SUV", 7.99);
+
+        User thatUser = new User(UUID.randomUUID().toString(), "Rikuto Kimura", "Rikuto_Kimura@fis.edu", "Student", 4, myCars);
+        Vehicle thatVehicle = new Vehicle("Kagan Angin", "Ford Fiesta", 3, UUID.randomUUID().toString(), myRidersUID, true, "Hatchback", 5.99);
+
 
         firestore.collection("everyones-items").document("kistner").collection("User").document(thisUser.getUid()).set(thisUser);
         firestore.collection("everyones-items").document("kistner").collection("Vehicle").document(thisVehicle.getVehicleID()).set(thisVehicle);
 
-        mAuth.signInWithEmailAndPassword(emailString, passwordString).addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
-                    @Override
-                    public void onComplete(@NonNull Task<AuthResult> task) {
-                        if (task.isSuccessful()) {
-                            // Sign in success, update UI with the signed-in user's information
-                            Log.d("Login: ", "signInWithEmail:success");
-                            FirebaseUser user = mAuth.getCurrentUser();
-                            updateUI(user);
-                        } else {
-                            // If sign in fails, display a message to the user.
-                            Log.w("Login: ", "signInWithEmail:failure", task.getException());
-                            updateUI(null);
-                        }
+        firestore.collection("everyones-items/kistner/User").document(thatUser.getUid()).set(thatUser);
+        firestore.collection("everyones-items/kistner/Vehicle").document(thatVehicle.getVehicleID()).set(thatVehicle);
+
+        firestore.collection("everyones-items").document("chandler").collection("books").document(thisUser.getUid()).set(thisUser);
+
+        Log.d("KISTNER_TEST", "ID to look for: " + thatUser.getUid());
+
+        firestore.collection("everyones-items/kistner/User").document(thatUser.getUid()).get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+            @Override
+            public void onComplete(@NonNull Task<DocumentSnapshot> task) {
+                if(task.isSuccessful()){
+                    DocumentSnapshot ds = task.getResult();
+
+                    Vehicle myVehicle = ds.toObject(Vehicle.class);
+                    User myUser = ds.toObject(User.class);
+
+//                    Log.d("KISTNER_TEST_VEHICLEMODEL", myVehicle.getModel());
+//                    Log.d("KISTNER_TEXT_USERNAME: ", myUser.getName());
+
+                }
+                else{
+
                     }
-                });
-
-
-    }
+                }
+            });
+        }
 
     public void signUp(View v) {
         System.out.println("Sign Up");
