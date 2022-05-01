@@ -12,6 +12,9 @@ public class Helicopter extends Vehicle{
         this.maxAirSpeed = maxAirSpeed;
     }
 
+    public Helicopter(String uid, String ownerString, String capacityString, String modelString, String basePriceString, int maxAltitudeInt, int maxAirSpeedInt) {
+    }
+
     public int getMaxAltitude() {
         return maxAltitude;
     }

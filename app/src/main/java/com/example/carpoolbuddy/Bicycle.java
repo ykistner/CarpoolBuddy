@@ -14,6 +14,9 @@ public class Bicycle extends Vehicle{
         this.weightCapacity = weightCapacity;
     }
 
+    public Bicycle(String ownerString, String modelString, int capacity, String vehicleId, double basePriceDouble) {
+    }
+
     public String getBicycleType() {
         return bicycleType;
     }

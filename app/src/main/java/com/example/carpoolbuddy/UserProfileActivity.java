@@ -19,4 +19,9 @@ public class UserProfileActivity extends AppCompatActivity {
         Intent nextScreen = new Intent(getBaseContext(), VehiclesInfoActivity.class);
         startActivity(nextScreen);
     }
+
+    public void addVehicles(View v) {
+        Intent nextScreen = new Intent(getBaseContext(), AddVehicleActivity.class);
+        startActivity(nextScreen);
+    }
 }

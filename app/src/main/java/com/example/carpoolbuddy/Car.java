@@ -10,6 +10,18 @@ public class Car extends Vehicle{
         this.range = range;
     }
 
+    public Car(String ownerString, String modelString, int capacityInt, String vehicleId, double basePriceDouble) {
+    }
+
+    public Car(String uid, String ownerString, String capacityString, String modelString, String basePriceString, int rangeInt) {
+    }
+
+    public Car(String uid, String ownerString, String capacityString, String modelString, String basePriceString, int rangeInt, double weightCapacityDouble) {
+    }
+
+    public Car(String uid, String ownerString, String capacityString, String modelString, String basePriceString, int weight, String bicycleTypeString, double weightCapacityDouble) {
+    }
+
     public int getRange() {
         return range;
     }

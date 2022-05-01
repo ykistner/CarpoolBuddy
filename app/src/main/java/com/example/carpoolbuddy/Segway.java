@@ -12,6 +12,9 @@ public class Segway extends Vehicle{
         this.weightCapacity = weightCapacity;
     }
 
+    public Segway(String ownerString, String modelString, int capacityInt, String vehicleId, double basePriceDouble) {
+    }
+
     public int getRange() {
         return range;
     }

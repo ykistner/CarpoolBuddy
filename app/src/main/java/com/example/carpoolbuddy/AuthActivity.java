@@ -120,24 +120,27 @@ public class AuthActivity extends AppCompatActivity {
         }
 
     public void signUp(View v) {
-        System.out.println("Sign Up");
-        String emailString = emailField.getText().toString();
-        String passwordString = passwordField.getText().toString();
-
-        mAuth.createUserWithEmailAndPassword(emailString, passwordString).addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
-            @Override
-            public void onComplete(@NonNull Task<AuthResult> task) {
-                if (task.isSuccessful()) {
-                    Log.d("SIGN UP", "Successfully signed up the user");
-
-                    FirebaseUser user = mAuth.getCurrentUser();
-                    updateUI(user);
-                } else {
-                    Log.w("Sign up", "createUserWithEmail:failure", task.getException());
-                    updateUI(null);
-                }
-            }
-        });
+        Intent intent = new Intent(this, CreateUserActivity.class);
+        startActivity(intent);
+//        System.out.println("Sign Up");
+//        String emailString = emailField.getText().toString();
+//        String passwordString = passwordField.getText().toString();
+//
+//        mAuth.createUserWithEmailAndPassword(emailString, passwordString).addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
+//            @Override
+//            public void onComplete(@NonNull Task<AuthResult> task) {
+//                if (task.isSuccessful()) {
+//                    Log.d("SIGN UP", "Successfully signed up the user");
+//
+//                    FirebaseUser user = mAuth.getCurrentUser();
+//                    updateUI(user);
+//                } else {
+//                    Log.w("Sign up", "createUserWithEmail:failure", task.getException());
+//                    updateUI(null);
+//                }
+//            }
+//        });
+//
     }
 
     public void updateUI(FirebaseUser currentUser) {
@@ -146,4 +149,6 @@ public class AuthActivity extends AppCompatActivity {
             startActivity(intent);
         }
     }
+
+
 }

@@ -2,8 +2,9 @@ package com.example.carpoolbuddy;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
-import android.os.Bundle;
+
 import android.content.Intent;
+import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
@@ -13,6 +14,8 @@ import android.widget.LinearLayout;
 import android.widget.Spinner;
 import android.widget.Toast;
 
+
+//import com.example.carpoolbuddy.R;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
@@ -21,7 +24,6 @@ import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.FirebaseFirestore;
 
 import java.util.ArrayList;
-
 
 public class CreateUserActivity extends AppCompatActivity {
     private FirebaseAuth mAuth;
@@ -42,8 +44,8 @@ public class CreateUserActivity extends AppCompatActivity {
         setContentView(R.layout.activity_create_user);
         mAuth = FirebaseAuth.getInstance();
         firestore = FirebaseFirestore.getInstance();
-        layout = findViewById(R.id.recyclerView);
-        userRoleSpinner = findViewById(R.id.spinner);
+        layout = findViewById(R.id.linearLayoutCreateUser);
+        userRoleSpinner = findViewById(R.id.selectTypeSpinnerspinner);
         setupSpinner();
         uid = "" + uidGenerator;
         uidGenerator++;
@@ -127,9 +129,8 @@ public class CreateUserActivity extends AppCompatActivity {
 
     public void updateUI(FirebaseUser currentUser) {
         if (currentUser != null) {
-            Intent intent = new Intent(this, UserProfileActivity.class);
+            Intent intent = new Intent(this,UserProfileActivity.class);
             startActivity(intent);
         }
     }
 }
-
