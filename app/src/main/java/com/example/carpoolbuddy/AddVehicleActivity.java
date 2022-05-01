@@ -23,6 +23,8 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.FirebaseFirestore;
 
+import com.google.firebase.firestore.DocumentReference;
+
 import java.util.ArrayList;
 
 public class AddVehicleActivity extends AppCompatActivity {
@@ -140,39 +142,43 @@ public class AddVehicleActivity extends AppCompatActivity {
 
 
     public void addVehicle(View v) {
+
+        //generate + get new key
+        DocumentReference newRideRef = firestore.collection(Constants.VEHICLE_COLLECTION).document();
+        String vehicleId = newRideRef.getId();
+
+        //make new vehicle according to selected vehicle type
+        Vehicle newVehicle = null;
+
+        //get data from form
         String ownerString = ownerField.getText().toString();
         String modelString = modelField.getText().toString();
-        String capacityString = capacityField.getText().toString();
-        String basePriceString = basePriceField.getText().toString();
+        double basePriceDouble = Double.parseDouble(basePriceField.getText().toString());
 
-        if(selectedRole.equals("Helicopter")) {
+        if(selectedRole.equals(Constants.HELICOPTER)) {
             int maxAltitudeInt = Integer.parseInt(maxAltitude.getText().toString());
             int maxAirSpeedInt = Integer.parseInt(maxAirspeed.getText().toString());
-            Helicopter newVehicle = new Helicopter(uid, ownerString, capacityString, modelString, basePriceString, maxAltitudeInt, maxAirSpeedInt);
-            uidGenerator++;
-            firestore.collection("vehicle").document(uid).set(newVehicle);
+            newVehicle = new Car(ownerString, modelString, maxAirSpeedInt, maxAltitudeInt, vehicleId, basePriceDouble);
         }
-        if(selectedRole.equals("Car")) {
+        else if(selectedRole.equals(Constants.CAR)) {
+            int capacityInt = Integer.parseInt(capacityField.getText().toString());
+            newVehicle = new Car(ownerString, modelString, capacityInt, vehicleId, basePriceDouble);
+        }
+        else if(selectedRole.equals(Constants.SEGWAY)) {
+            int capacityInt = Integer.parseInt(capacityField.getText().toString());
             int rangeInt = Integer.parseInt(range.getText().toString());
-            Car newVehicle = new Car(uid, ownerString, capacityString, modelString, basePriceString, rangeInt);
-            uidGenerator++;
-            firestore.collection("vehicle").document(uid).set(newVehicle);
+            newVehicle = new Segway(ownerString, modelString, capacityInt, rangeInt, vehicleId, basePriceDouble);
         }
-        if(selectedRole.equals("Segway")) {
-            int rangeInt = Integer.parseInt(range.getText().toString());
-            double weightCapacityDouble = Integer.parseInt(weightCapacity.getText().toString());
-            Car newVehicle = new Car(uid, ownerString, capacityString, modelString, basePriceString, rangeInt, weightCapacityDouble);
-            uidGenerator++;
-            firestore.collection("vehicle").document(uid).set(newVehicle);
-        }
-        if(selectedRole.equals("Bicycle")) {
+        else if(selectedRole.equals(Constants.BICYCLE)) {
             int weight = Integer.parseInt(range.getText().toString());
             String bicycleTypeString = new String(bicycleType.getText().toString());
             double weightCapacityDouble = Integer.parseInt(weightCapacity.getText().toString());
-            Car newVehicle = new Car(uid, ownerString, capacityString, modelString, basePriceString, weight, bicycleTypeString, weightCapacityDouble);
-            uidGenerator++;
-            firestore.collection("vehicle").document(uid).set(newVehicle);
+            int rangeInt = Integer.parseInt(range.getText().toString());
+            newVehicle = new Car(ownerString, modelString, weight, weightCapacityDouble, bicycleTypeString, rangeInt, vehicleId, basePriceDouble);
         }
+
+        //add the new vehicle to the database
+        newRideRef.set(newVehicle);
     }
 
     public void updateUI(FirebaseUser currentUser) {

@@ -28,6 +28,12 @@ public class Vehicle implements Serializable {
         this.basePrice = basePrice;
     }
 
+    public Vehicle(String owner, String model, double basePrice, int capacity) {
+    }
+
+    public Vehicle(String owner, String model, String vehicleID, String vehicleType, double basePrice) {
+    }
+
     public String getOwner() {
         return owner;
     }
