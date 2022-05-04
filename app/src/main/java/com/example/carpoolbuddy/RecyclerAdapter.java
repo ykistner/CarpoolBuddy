@@ -16,7 +16,7 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerViewHolder> {
     private ArrayList<Vehicle> vehicleList;
     private OnViewClickListner onViewClickListner;
 
-    public RecyclerAdapter(ArrayList<Vehicle> vehicleList, VehiclesInfoActivity vehiclesInfoActivity) {
+    public RecyclerAdapter(ArrayList<Vehicle> vehicleList, OnViewClickListner onViewClickListner) {
         this.vehicleList = vehicleList;
         this.onViewClickListner = onViewClickListner;
     }
@@ -26,7 +26,7 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerViewHolder> {
     public RecyclerViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View myView = LayoutInflater.from(parent.getContext()).inflate(R.layout.recycler_row_view, parent, false);
 
-        RecyclerViewHolder holder = new RecyclerViewHolder(myView, VehiclesInfoActivity);
+        RecyclerViewHolder holder = new RecyclerViewHolder(myView, onViewClickListner);
         return holder;
     }
 
