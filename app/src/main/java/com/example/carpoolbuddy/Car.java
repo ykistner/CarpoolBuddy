@@ -1,7 +1,5 @@
 package com.example.carpoolbuddy;
 
-import java.util.ArrayList;
-
 public class Car extends Vehicle{
     private int range;
 
@@ -45,4 +43,5 @@ public class Car extends Vehicle{
                 "range=" + range +
                 '}';
     }
+
 }

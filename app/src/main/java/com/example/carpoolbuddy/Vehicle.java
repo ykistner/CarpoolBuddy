@@ -17,6 +17,16 @@ public class Vehicle implements Serializable {
 
     }
 
+    public Vehicle(String ownerString, String modelString, int capacityInt, String vehicleId, double basePriceDouble) {
+        this.owner = ownerString;
+        this.model = modelString;
+        this.capacity = capacityInt;
+        this.vehicleID = vehicleId;
+        this.basePrice = basePriceDouble;
+        ridersUIDs = new ArrayList<>();
+        this.vehicleType = "";
+        this.open = true;
+    }
     public Vehicle(String owner, String model, int capacity, String vehicleID, ArrayList<String> ridersUIDs, boolean open, String vehicleType, double basePrice) {
         this.owner = owner;
         this.model = model;

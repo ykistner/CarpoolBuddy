@@ -2,6 +2,8 @@ package com.example.carpoolbuddy;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -27,6 +29,10 @@ public class VehiclesInfoActivity extends AppCompatActivity {
 
     //added for testing
     private ArrayList<Vehicle> vehiclesList;
+    private RecyclerView vehicleRecView;
+    private RecyclerAdapter myAdapter;
+
+    ArrayList allTheStuff;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -34,13 +40,15 @@ public class VehiclesInfoActivity extends AppCompatActivity {
         setContentView(R.layout.activity_vehicle_info);
         mAuth = FirebaseAuth.getInstance();
         firestore = FirebaseFirestore.getInstance();
+        vehicleRecView = findViewById(R.id.vehicleRecView);
 
         //added for testing
         vehiclesList = new ArrayList<Vehicle>();
+//        getVehicles();
     }
 
-    public void testDB(View v) {
-        vehiclesList.clear();
+    public void getVehicles(View v) {
+//        vehiclesList.clear();
         TaskCompletionSource<String> getAllRidesTask = new TaskCompletionSource<>();
         firestore.collection(Constants.VEHICLE_COLLECTION).whereEqualTo("open", true)
                 .get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
@@ -61,7 +69,9 @@ public class VehiclesInfoActivity extends AppCompatActivity {
         getAllRidesTask.getTask().addOnCompleteListener(new OnCompleteListener<String>() {
             @Override
             public void onComplete(@NonNull Task<String> task) {
-                System.out.println("VEHICLE INFO: " + vehiclesList.toString());
+                myAdapter = new RecyclerAdapter(vehiclesList, VehiclesInfoActivity.this);
+                vehicleRecView.setAdapter(myAdapter);
+                vehicleRecView.setLayoutManager(new LinearLayoutManager(VehiclesInfoActivity.this));
             }
         });
     }

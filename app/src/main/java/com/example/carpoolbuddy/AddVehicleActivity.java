@@ -9,6 +9,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.Spinner;
@@ -54,6 +55,7 @@ public class AddVehicleActivity extends AppCompatActivity {
         firestore = FirebaseFirestore.getInstance();
         layout = findViewById(R.id.linearLayoutAddVehicle);
         userRoleSpinner = findViewById(R.id.spinnerAddVehicle);
+
         setupSpinner();
         uid = "" + uidGenerator;
         uidGenerator++;
@@ -160,10 +162,7 @@ public class AddVehicleActivity extends AppCompatActivity {
             int maxAirSpeedInt = Integer.parseInt(maxAirspeed.getText().toString());
             newVehicle = new Car(ownerString, modelString, maxAirSpeedInt, maxAltitudeInt, vehicleId, basePriceDouble);
         }
-        else if(selectedRole.equals(Constants.CAR)) {
-            int capacityInt = Integer.parseInt(capacityField.getText().toString());
-            newVehicle = new Car(ownerString, modelString, capacityInt, vehicleId, basePriceDouble);
-        }
+        else if(selectedRole.equals(Constants.CAR)) { int capacityInt = Integer.parseInt(capacityField.getText().toString()); newVehicle = new Vehicle(ownerString, modelString, capacityInt, vehicleId, basePriceDouble); }
         else if(selectedRole.equals(Constants.SEGWAY)) {
             int capacityInt = Integer.parseInt(capacityField.getText().toString());
             int rangeInt = Integer.parseInt(range.getText().toString());
@@ -179,12 +178,5 @@ public class AddVehicleActivity extends AppCompatActivity {
 
         //add the new vehicle to the database
         newRideRef.set(newVehicle);
-    }
-
-    public void updateUI(FirebaseUser currentUser) {
-        if (currentUser != null) {
-            Intent intent = new Intent(this,UserProfileActivity.class);
-            startActivity(intent);
-        }
     }
 }
