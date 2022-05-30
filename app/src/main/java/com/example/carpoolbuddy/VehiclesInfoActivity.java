@@ -5,8 +5,10 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Parcelable;
 import android.util.Log;
 import android.view.View;
 
@@ -23,7 +25,8 @@ import com.google.firebase.firestore.QuerySnapshot;
 
 import java.util.ArrayList;
 
-public class VehiclesInfoActivity extends AppCompatActivity {
+public class VehiclesInfoActivity extends AppCompatActivity implements RecyclerAdapter.OnViewClickListner{
+    private static final String TAG = "";
     private FirebaseAuth mAuth;
     private FirebaseFirestore firestore;
 
@@ -31,6 +34,7 @@ public class VehiclesInfoActivity extends AppCompatActivity {
     private ArrayList<Vehicle> vehiclesList;
     private RecyclerView vehicleRecView;
     private RecyclerAdapter myAdapter;
+    private Context context;
 
     ArrayList allTheStuff;
 
@@ -41,6 +45,7 @@ public class VehiclesInfoActivity extends AppCompatActivity {
         mAuth = FirebaseAuth.getInstance();
         firestore = FirebaseFirestore.getInstance();
         vehicleRecView = findViewById(R.id.vehicleRecView);
+        context = this;
 
         //added for testing
         vehiclesList = new ArrayList<Vehicle>();
@@ -79,5 +84,14 @@ public class VehiclesInfoActivity extends AppCompatActivity {
     public void gotoUserProfile(View v) {
         Intent intent = new Intent(this, UserProfileActivity.class);
         startActivity(intent);
+    }
+
+    @Override
+    public void onViewClick(int position) {
+        System.out.println(position);
+        Intent intent = new Intent(this, VehicleProfileActivity.class);
+        intent.putExtra("Selected Vehicle" ,(Parcelable) vehiclesList.get(position));
+        startActivity(intent);
+
     }
 }

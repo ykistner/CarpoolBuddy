@@ -8,8 +8,6 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import java.util.ArrayList;
-import android.content.Context;
-import android.widget.TextView;
 
 public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerViewHolder> {
 
@@ -44,6 +42,9 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerViewHolder> {
     }
 
     public interface OnViewClickListner {
-        public void onViewClick(int position);
+        void onViewClick(int position);
     }
+
+
+
 }
