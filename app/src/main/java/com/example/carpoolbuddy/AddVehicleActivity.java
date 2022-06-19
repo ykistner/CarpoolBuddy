@@ -175,7 +175,7 @@ public class AddVehicleActivity extends AppCompatActivity {
             int rangeInt = Integer.parseInt(range.getText().toString());
             newVehicle = new Car(ownerString, modelString, weight, weightCapacityDouble, bicycleTypeString, rangeInt, vehicleId, basePriceDouble);
         }
-
+        System.out.println(newVehicle);
         //add the new vehicle to the database
         newRideRef.set(newVehicle);
     }
