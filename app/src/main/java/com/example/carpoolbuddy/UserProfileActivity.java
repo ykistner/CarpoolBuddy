@@ -6,6 +6,8 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 
+import com.google.rpc.Help;
+
 public class UserProfileActivity extends AppCompatActivity {
 
     @Override
@@ -22,6 +24,16 @@ public class UserProfileActivity extends AppCompatActivity {
 
     public void addVehicles(View v) {
         Intent nextScreen = new Intent(getBaseContext(), AddVehicleActivity.class);
+        startActivity(nextScreen);
+    }
+
+    public void goToSignOut(View v) {
+        Intent nextScreen = new Intent(getBaseContext(), AuthActivity.class);
+        startActivity(nextScreen);
+    }
+
+    public void goToHelp(View v){
+        Intent nextScreen = new Intent(getBaseContext(), HelpActivity.class);
         startActivity(nextScreen);
     }
 }

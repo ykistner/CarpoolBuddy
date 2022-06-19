@@ -44,12 +44,12 @@ public class VehicleProfileActivity extends AppCompatActivity implements View.On
             // retrieve the data for the vehicle
             carMaxCapacityDataTextView = findViewById(R.id.MaxCapacityDataTextView);
             carRemainingCapacityDataTextView = findViewById(R.id.RemainingCapacityDataTextView);
-            bookedUIDs = findViewById(R.id.BookedUIDsDataTextView);
+           // bookedUIDs = findViewById(R.id.BookedUIDsDataTextView);
 
             // update the TextViews with the vehicle information
             carMaxCapacityDataTextView.setText(String.valueOf(selectedVehicle.getCapacity()));
             carRemainingCapacityDataTextView.setText(String.valueOf(selectedVehicle.getRemainingCapacity()));
-            bookedUIDs.setText(selectedVehicle.getRidersUIDs().toString());
+            //bookedUIDs.setText(selectedVehicle.getRidersUIDs().toString());
         }
 
         // find the button and attach a listener
